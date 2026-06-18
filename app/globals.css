@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+:root {
+  /* ── Raw palette (edit hex here to retheme) ── */
+  --color-deep-burnt: #8b4411;
+  --color-terracotta: #ae6e4e;
+  --color-sandy-tan: #cc9767;
+  --color-cream: #f5f5dd;
+  --color-beige: #c7ad7f;
+  --color-taupe: #a57a5a;
+
+  /* ── Semantic tokens ── */
+  --background: var(--color-cream);
+  --foreground: var(--color-deep-burnt);
+  --foreground-muted: var(--color-taupe);
+  --accent: var(--color-deep-burnt);
+  --accent-secondary: var(--color-terracotta);
+  --accent-tertiary: var(--color-sandy-tan);
+  --surface: var(--color-cream);
+  --surface-elevated: #edeed4;
+  --border: var(--color-beige);
+  --border-strong: var(--color-terracotta);
+  --text-body: var(--color-taupe);
+  --text-heading: var(--color-deep-burnt);
+  --text-inverse: var(--color-cream);
+  --frame-stroke: var(--color-beige);
+  --frame-stroke-active: var(--color-deep-burnt);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted: var(--foreground-muted);
+  --color-body: var(--text-body);
+  --color-inverse: var(--text-inverse);
+  --font-display: var(--font-bebas);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--text-body);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Film grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--accent-secondary);
+  color: var(--text-inverse);
+}
+
+/* Display typography scale */
+.text-display-xl {
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+}
+
+.text-display-lg {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+.text-display-md {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+
+/* Timeline scrub line */
+.timeline-scrub {
+  height: 2px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-scrub::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: var(--scrub-progress, 0%);
+  background: var(--accent);
+  transition: width 0.1s linear;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
+}
