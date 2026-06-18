@@ -139,3 +139,50 @@ body::before {
     animation: none;
   }
 }
+
+/* Category horizontal track — scroll on hover only */
+.category-track {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+  -ms-overflow-style: none;
+}
+
+.category-track::-webkit-scrollbar {
+  height: 4px;
+}
+
+.category-track::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.category-track::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.category-track--active::-webkit-scrollbar-thumb {
+  background: var(--accent-secondary);
+}
+
+/* Hero portrait — faded by default, full on hover */
+.hero-portrait-frame {
+  cursor: default;
+}
+
+.hero-portrait-image {
+  opacity: 0.72;
+}
+
+.group:hover .hero-portrait-image {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-portrait-image {
+    opacity: 0.85;
+  }
+
+  .group:hover .hero-portrait-image {
+    opacity: 1;
+  }
+}

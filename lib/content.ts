@@ -92,6 +92,7 @@ export const siteContent: SiteContent = {
   hero: {
     showreelUrl: "#",
     posterImage: "/images/hero-poster.svg",
+    profileImage: "/images/alankrit.jpeg",
   },
   social: {
     instagram: "https://instagram.com/alankritsharma",

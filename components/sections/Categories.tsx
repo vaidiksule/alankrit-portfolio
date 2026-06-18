@@ -1,56 +1,42 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
 import { siteContent } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Marquee } from "@/components/ui/Marquee";
-import { usePrefersReducedMotion } from "@/lib/hooks";
+import { cn } from "@/lib/utils";
 
 export function Categories() {
   const { categories } = siteContent;
-  const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    if (prefersReducedMotion) return;
-    gsap.registerPlugin(ScrollTrigger);
+    const container = trackRef.current;
+    if (!container) return;
 
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
+    const onWheel = (e: WheelEvent) => {
+      const maxScroll = container.scrollWidth - container.clientWidth;
+      if (maxScroll <= 0) return;
 
-    const mm = gsap.matchMedia();
+      const { scrollLeft } = container;
+      const atStart = scrollLeft <= 0;
+      const atEnd = scrollLeft >= maxScroll - 1;
+      const scrollingDown = e.deltaY > 0;
+      const scrollingUp = e.deltaY < 0;
 
-    mm.add("(min-width: 768px)", () => {
-      const scrollWidth = track.scrollWidth - window.innerWidth + 200;
+      if ((scrollingDown && !atEnd) || (scrollingUp && !atStart)) {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+      }
+    };
 
-      const tween = gsap.to(track, {
-        x: -scrollWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: () => `+=${scrollWidth}`,
-          pin: true,
-          scrub: 1,
-          invalidateOnRefresh: true,
-        },
-      });
-
-      return () => {
-        tween.scrollTrigger?.kill();
-        tween.kill();
-      };
-    });
-
-    return () => mm.revert();
-  }, [prefersReducedMotion]);
+    container.addEventListener("wheel", onWheel, { passive: false });
+    return () => container.removeEventListener("wheel", onWheel);
+  }, []);
 
   return (
-    <section id="categories" ref={sectionRef} className="overflow-hidden">
+    <section id="categories" className="overflow-hidden">
       <div className="px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
@@ -63,24 +49,40 @@ export function Categories() {
 
       <Marquee items={categories.map((c) => c.label)} className="mb-16" />
 
-      <div
-        ref={trackRef}
-        className="flex gap-8 px-6 pb-24 md:gap-12 md:px-10 md:pb-32"
-      >
-        {categories.map((category) => (
-          <div
-            key={category.id}
-            className="flex w-[85vw] shrink-0 flex-col justify-between border border-border bg-background p-8 md:w-[420px] md:p-10"
-          >
-            <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent-tertiary">
-              {category.id.replace("-", " ")}
-            </span>
-            <h3 className="mt-6 font-display text-display-md uppercase text-foreground">
-              {category.label}
-            </h3>
-            <p className="mt-4 text-body">{category.description}</p>
-          </div>
-        ))}
+      <div className="relative px-6 md:px-10">
+        <p
+          className={cn(
+            "pointer-events-none mb-4 font-mono text-xs uppercase tracking-widest text-accent-tertiary transition-opacity duration-300",
+            isHovered ? "opacity-100" : "opacity-60",
+          )}
+        >
+          Hover & scroll to explore →
+        </p>
+
+        <div
+          ref={trackRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className={cn(
+            "category-track flex gap-8 overflow-x-auto pb-24 md:gap-12 md:pb-32",
+            isHovered && "category-track--active",
+          )}
+        >
+          {categories.map((category) => (
+            <div
+              key={category.id}
+              className="flex w-[85vw] shrink-0 flex-col justify-between border border-border bg-background p-8 md:w-[420px] md:p-10"
+            >
+              <span className="font-mono text-xs uppercase tracking-[0.3em] text-accent-tertiary">
+                {category.id.replace("-", " ")}
+              </span>
+              <h3 className="mt-6 font-display text-display-md uppercase text-foreground">
+                {category.label}
+              </h3>
+              <p className="mt-4 text-body">{category.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

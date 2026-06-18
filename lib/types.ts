@@ -26,6 +26,7 @@ export interface Profile {
 export interface HeroContent {
   showreelUrl: string;
   posterImage: string;
+  profileImage: string;
 }
 
 export interface SocialLinks {
