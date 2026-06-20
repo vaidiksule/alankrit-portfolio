@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { siteContent } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
+import { ShowreelEmbed } from "@/components/ui/ShowreelEmbed";
 import { HeroPortrait } from "@/components/sections/HeroPortrait";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 
@@ -88,34 +88,10 @@ export function Hero() {
             <span className="absolute bottom-0 right-0 h-8 w-8 border-b-2 border-r-2 border-accent" />
           </div>
 
-          <a
-            href={hero.showreelUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative block aspect-video overflow-hidden border border-border bg-surface-elevated"
-          >
-            <Image
-              src={hero.posterImage}
-              alt="Showreel"
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
-              sizes="(max-width: 1280px) 100vw, 1280px"
-            />
-            <div className="absolute inset-0 flex items-center justify-center bg-foreground/20 transition-colors group-hover:bg-foreground/30">
-              <div className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-inverse/50 bg-accent/90 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-                <svg
-                  className="ml-1 h-8 w-8 text-inverse"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M8 5v14l11-7z" />
-                </svg>
-              </div>
-            </div>
-            <span className="absolute bottom-4 left-4 font-mono text-xs uppercase tracking-widest text-inverse">
-              Play Showreel
-            </span>
-          </a>
+          <ShowreelEmbed
+            videoId={hero.showreelVideoId}
+            posterImage={hero.posterImage}
+          />
         </motion.div>
 
         <div

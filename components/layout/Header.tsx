@@ -39,7 +39,7 @@ export function Header() {
           className="font-display text-2xl uppercase tracking-wider text-foreground"
         >
           {name.split(" ")[0]}
-          <span className="text-accent-secondary">.</span>
+          <span className="text-accent neon-text">.</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -47,7 +47,7 @@ export function Header() {
             <a
               key={item.href}
               href={item.href}
-              className="font-mono text-xs uppercase tracking-widest text-muted transition-colors hover:text-foreground"
+              className="font-mono text-xs uppercase tracking-widest text-muted transition-colors hover:text-accent-secondary"
             >
               {item.label}
             </a>

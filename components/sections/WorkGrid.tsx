@@ -1,9 +1,9 @@
-import { siteContent } from "@/lib/content";
+import { siteContent, getSectionFolderUrl } from "@/lib/content";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { VideoFrame } from "@/components/ui/VideoFrame";
 
 export function WorkGrid() {
-  const { projects } = siteContent;
+  const { portfolioSections } = siteContent;
 
   return (
     <section id="work" className="bg-surface-elevated px-6 py-24 md:px-10 md:py-32">
@@ -11,18 +11,17 @@ export function WorkGrid() {
         <SectionHeading
           eyebrow="Portfolio"
           title="Selected Work"
-          description="A curated selection of edits across brand, fashion, fitness, and longform content. Links will connect to Instagram and Google Drive."
+          description="Featured edits from each category. Play the preview inline, or open the full folder on Google Drive."
         />
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:gap-16">
-          {projects.map((project, i) => (
+          {portfolioSections.map((section, i) => (
             <VideoFrame
-              key={project.id}
-              title={project.title}
-              category={project.category}
-              thumbnail={project.thumbnail}
-              href={project.videoUrl}
-              timecode={project.timecode}
+              key={section.id}
+              title={section.label}
+              href={getSectionFolderUrl(section)}
+              previewFileId={section.previewFileId}
+              thumbnailFallback={section.thumbnailFallback}
               index={i}
             />
           ))}

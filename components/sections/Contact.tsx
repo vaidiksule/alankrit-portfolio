@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { siteContent } from "@/lib/content";
+import { siteContent, getWhatsAppUrl } from "@/lib/content";
 import { Button } from "@/components/ui/Button";
 import { usePrefersReducedMotion } from "@/lib/hooks";
 
@@ -54,6 +54,12 @@ export function Contact() {
           <Button href={`mailto:${social.email}`}>Email Me</Button>
           <Button href={social.instagram} variant="secondary">
             Instagram
+          </Button>
+          <Button
+            href={getWhatsAppUrl(social.phone, social.whatsappMessage)}
+            variant="secondary"
+          >
+            WhatsApp
           </Button>
         </motion.div>
       </div>

@@ -10,10 +10,10 @@ interface ButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-accent text-inverse border border-accent hover:bg-accent-secondary hover:border-accent-secondary",
+    "bg-accent text-inverse border border-accent neon-glow hover:bg-accent-secondary hover:border-accent-secondary hover:shadow-[0_0_32px_rgba(0,212,255,0.45)]",
   secondary:
-    "bg-transparent text-foreground border border-border-strong hover:bg-surface-elevated",
-  ghost: "bg-transparent text-muted border border-transparent hover:text-foreground",
+    "bg-transparent text-foreground border border-border-strong hover:border-accent hover:bg-surface-elevated hover:shadow-[0_0_20px_rgba(0,102,255,0.2)]",
+  ghost: "bg-transparent text-muted border border-transparent hover:text-accent-secondary",
 };
 
 export function Button({

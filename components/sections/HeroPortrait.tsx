@@ -65,11 +65,11 @@ export function HeroPortrait() {
             className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             aria-hidden
           >
-            <div className="absolute inset-x-0 top-1/2 h-px bg-inverse/10" />
-            <div className="absolute inset-y-0 left-1/2 w-px bg-inverse/10" />
+            <div className="absolute inset-x-0 top-1/2 h-px bg-accent/30" />
+            <div className="absolute inset-y-0 left-1/2 w-px bg-accent/30" />
           </div>
 
-          <span className="pointer-events-none absolute bottom-4 right-4 font-mono text-[10px] tracking-widest text-inverse opacity-0 transition-all duration-500 group-hover:opacity-70">
+          <span className="pointer-events-none absolute bottom-4 right-4 font-mono text-[10px] tracking-widest text-accent-secondary opacity-0 transition-all duration-500 group-hover:opacity-90">
             00:00:12:04
           </span>
         </div>

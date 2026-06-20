@@ -1,30 +1,36 @@
 @import "tailwindcss";
 
 :root {
-  /* ── Raw palette (edit hex here to retheme) ── */
-  --color-deep-burnt: #8b4411;
-  --color-terracotta: #ae6e4e;
-  --color-sandy-tan: #cc9767;
-  --color-cream: #f5f5dd;
-  --color-beige: #c7ad7f;
-  --color-taupe: #a57a5a;
+  /* ── Raw palette — Electric Cyberpunk (edit hex here to retheme) ── */
+  --color-ink-black: #050508;
+  --color-ink-deep: #0a0e17;
+  --color-ink-surface: #0f1420;
+  --color-ink-elevated: #141b2d;
+  --color-neon-blue: #0066ff;
+  --color-neon-cyan: #00d4ff;
+  --color-neon-bright: #3b9eff;
+  --color-slate-muted: #64748b;
+  --color-text-light: #e8ecf4;
+  --color-border-dark: #1a2744;
 
   /* ── Semantic tokens ── */
-  --background: var(--color-cream);
-  --foreground: var(--color-deep-burnt);
-  --foreground-muted: var(--color-taupe);
-  --accent: var(--color-deep-burnt);
-  --accent-secondary: var(--color-terracotta);
-  --accent-tertiary: var(--color-sandy-tan);
-  --surface: var(--color-cream);
-  --surface-elevated: #edeed4;
-  --border: var(--color-beige);
-  --border-strong: var(--color-terracotta);
-  --text-body: var(--color-taupe);
-  --text-heading: var(--color-deep-burnt);
-  --text-inverse: var(--color-cream);
-  --frame-stroke: var(--color-beige);
-  --frame-stroke-active: var(--color-deep-burnt);
+  --background: var(--color-ink-black);
+  --foreground: var(--color-text-light);
+  --foreground-muted: var(--color-slate-muted);
+  --accent: var(--color-neon-blue);
+  --accent-secondary: var(--color-neon-cyan);
+  --accent-tertiary: var(--color-neon-bright);
+  --surface: var(--color-ink-deep);
+  --surface-elevated: var(--color-ink-elevated);
+  --border: var(--color-border-dark);
+  --border-strong: var(--color-neon-blue);
+  --text-body: #94a3b8;
+  --text-heading: var(--color-text-light);
+  --text-inverse: var(--color-ink-black);
+  --frame-stroke: var(--color-border-dark);
+  --frame-stroke-active: var(--color-neon-blue);
+  --glow-neon: 0 0 24px rgba(0, 102, 255, 0.45);
+  --glow-neon-strong: 0 0 48px rgba(0, 102, 255, 0.55);
 }
 
 @theme inline {
@@ -60,26 +66,52 @@ html {
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
+  background-image:
+    radial-gradient(
+      ellipse 90% 60% at 50% 110%,
+      rgba(0, 102, 255, 0.18) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 0%,
+      rgba(0, 212, 255, 0.06) 0%,
+      transparent 55%
+    );
   color: var(--text-body);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
   overflow-x: hidden;
 }
 
-/* Film grain overlay */
+/* Subtle scanline + grain */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
 ::selection {
-  background: var(--accent-secondary);
+  background: var(--accent);
   color: var(--text-inverse);
+}
+
+/* Neon glow utilities */
+.neon-glow {
+  box-shadow: var(--glow-neon);
+}
+
+.neon-text {
+  text-shadow: 0 0 32px rgba(0, 102, 255, 0.5);
+}
+
+.neon-border-glow {
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 102, 255, 0.2),
+    var(--glow-neon);
 }
 
 /* Display typography scale */
@@ -117,6 +149,7 @@ body::before {
   height: 100%;
   width: var(--scrub-progress, 0%);
   background: var(--accent);
+  box-shadow: var(--glow-neon);
   transition: width 0.1s linear;
 }
 
@@ -140,10 +173,10 @@ body::before {
   }
 }
 
-/* Category horizontal track — scroll on hover only */
+/* Category horizontal track */
 .category-track {
   scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+  scrollbar-color: var(--accent) transparent;
   -ms-overflow-style: none;
 }
 
@@ -161,16 +194,17 @@ body::before {
 }
 
 .category-track--active::-webkit-scrollbar-thumb {
-  background: var(--accent-secondary);
+  background: var(--accent);
+  box-shadow: var(--glow-neon);
 }
 
-/* Hero portrait — faded by default, full on hover */
+/* Hero portrait */
 .hero-portrait-frame {
   cursor: default;
 }
 
 .hero-portrait-image {
-  opacity: 0.72;
+  opacity: 0.85;
 }
 
 .group:hover .hero-portrait-image {
@@ -179,7 +213,7 @@ body::before {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-portrait-image {
-    opacity: 0.85;
+    opacity: 0.9;
   }
 
   .group:hover .hero-portrait-image {

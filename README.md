@@ -13,56 +13,57 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Editing Content
 
-All site copy, links, and project data live in one file:
+All site copy, links, and portfolio data live in **[`lib/content.ts`](lib/content.ts)**.
 
-**[`lib/content.ts`](lib/content.ts)**
+### Showcase reel (YouTube)
 
-Update profile info, projects, categories, social links, and showreel URL there. No component changes needed.
+The hero embeds a YouTube video with autoplay (muted). Update the video ID in `content.ts`:
+
+```ts
+hero: {
+  showreelVideoId: "SpAwdGohbhc",  // change this ID
+  showreelUrl: "https://www.youtube.com/watch?v=SpAwdGohbhc",
+  ...
+}
+```
+
+The video must be **Public** or **Unlisted** and allow embedding.
+
+### Portfolio sections (Google Drive)
+
+Four work categories each link to a Google Drive **folder** on click. Edit `portfolioSections`:
+
+```ts
+{
+  id: "ai-video",
+  label: "AI Video",
+  folderId: "1XbgGNYAPQq1Qnp5-pJ0SJmzhnvQNTaDW",  // folder ID from Drive URL
+  previewFileId: "",   // optional: Drive file ID for thumbnail preview
+  previewTitle: "AI Video — Featured Edit",
+  thumbnailFallback: "/images/placeholder-1.svg",
+}
+```
+
+**To add Drive preview thumbnails:** open a video in Drive, copy the file ID from the URL (`/file/d/FILE_ID/view`), and set `previewFileId`. Folders must be shared as **Anyone with the link**.
 
 ## Changing Colors
 
-All colors are defined as CSS variables in **[`app/globals.css`](app/globals.css)**.
-
-Edit the hex values in the `:root` block under "Raw palette":
-
-```css
---color-deep-burnt: #8B4411;
---color-terracotta: #AE6E4E;
---color-sandy-tan: #CC9767;
---color-cream: #F5F5DD;
---color-beige: #C7AD7F;
---color-taupe: #A57A5A;
-```
-
-Semantic tokens (`--background`, `--accent`, etc.) reference these automatically.
+Edit hex values in **[`app/globals.css`](app/globals.css)** under the `:root` "Raw palette" block.
 
 ## Deploy to Vercel
 
-1. Push to GitHub: `https://github.com/vaidiksule/alankrit-portfolio`
+1. Push to GitHub
 2. Import the repo in [Vercel](https://vercel.com)
 3. Deploy — no environment variables required
 
 ## Tech Stack
 
-- **Next.js 16** (App Router) + TypeScript
-- **Tailwind CSS v4** with custom CSS variable theme
-- **Framer Motion** — section reveals, hero animations
-- **GSAP + ScrollTrigger** — pinned category scroll (desktop)
-- **Lenis** — smooth scrolling
-
-## Project Structure
-
-```
-app/              → Pages, layout, global styles
-components/
-  sections/       → Hero, About, Categories, Work, Tools, Contact
-  ui/             → VideoFrame, Button, Marquee, SectionHeading
-  layout/         → Header, Footer
-lib/
-  content.ts      → All editable site content
-  types.ts        → TypeScript interfaces
-```
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS v4
+- YouTube embed (showcase reel)
+- Google Drive links (portfolio folders)
+- Framer Motion, GSAP, Lenis
 
 ## Phase 2 (Later)
 
-Admin dashboard for non-technical content updates — projects, bio, links, and hero video.
+Admin dashboard for non-technical content updates.

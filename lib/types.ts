@@ -1,16 +1,18 @@
-export interface Category {
+export interface PortfolioSection {
   id: string;
   label: string;
   description: string;
+  folderId: string;
+  /** Google Drive file ID for single-video preview — optional */
+  previewFileId: string;
+  thumbnailFallback: string;
 }
 
-export interface Project {
+export interface Specialization {
   id: string;
   title: string;
-  category: string;
-  thumbnail: string;
-  videoUrl: string;
-  timecode: string;
+  description: string;
+  folderId: string;
 }
 
 export interface Profile {
@@ -24,6 +26,7 @@ export interface Profile {
 }
 
 export interface HeroContent {
+  showreelVideoId: string;
   showreelUrl: string;
   posterImage: string;
   profileImage: string;
@@ -32,6 +35,8 @@ export interface HeroContent {
 export interface SocialLinks {
   instagram: string;
   email: string;
+  phone: string;
+  whatsappMessage: string;
 }
 
 export interface Stat {
@@ -42,9 +47,11 @@ export interface Stat {
 export interface SiteContent {
   profile: Profile;
   tools: string[];
+  extraTools: string[];
   styleTags: string[];
-  categories: Category[];
-  projects: Project[];
+  marqueeItems: string[];
+  specializations: Specialization[];
+  portfolioSections: PortfolioSection[];
   hero: HeroContent;
   social: SocialLinks;
   stats: Stat[];

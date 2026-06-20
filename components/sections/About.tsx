@@ -22,7 +22,7 @@ export function About() {
           {profile.availability} · {profile.location}
         </p>
 
-        <div className="grid grid-cols-1 gap-8 border-t border-border pt-12 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 border-t border-border pt-12 sm:grid-cols-2">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
